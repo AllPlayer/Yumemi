@@ -1,9 +1,14 @@
 <div class="header">
-  <h2 class="heading">Title</h2>
+  <h2 class="heading">Prefectures &amp; Their Population</h2>
 </div>
-<div class="checkbox-list">
-  <div class="checkbox" *ngFor="let item of prefectures.result">
-    <input type="checkbox" id="item.prefCode" name="item.prefName" value="item.prefCode">
-    <label for="vehicle1"> {{item.prefName}}</label><br>
+<form [formGroup]="form">
+  <h3 class="sub-heading">Prefectures</h3>
+  <div class="checkbox-list">
+    <div class="checkbox" *ngFor="let item of prefectures">
+      <input type="checkbox" [value]="item.prefCode" (change)="onCheckboxChange($event)">
+      <label for="{{item.prefName}}"> {{item.prefName}}</label><br>
+    </div>
   </div>
-</div>
+</form>
+
+<div class='chart' [chart]='chart'></div>
