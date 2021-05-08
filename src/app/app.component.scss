@@ -1,0 +1,20 @@
+.header{
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  background-color: #ccc;
+  min-height: 50px;
+  padding-top: 20px;
+}
+.heading{
+  margin: 0px!important;
+}
+.checkbox{
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+}
