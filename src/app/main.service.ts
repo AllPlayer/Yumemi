@@ -12,7 +12,7 @@ export class MainService {
   constructor(private http: HttpClient) { }
 
   async prefectureApi(): Promise<any> {
-    const headers = { 'X-API-KEY': 'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' }
+    const headers = { 'X-API-KEY': 'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' };
     return this.http.get<any>(this.prefecturePath, { headers })
     .pipe(
       map((res) => {
