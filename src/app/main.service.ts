@@ -7,40 +7,40 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class MainService {
-  prefecturePath = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
-  populationByPrefecturePath = "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear";
+  prefecturePath = 'https://opendata.resas-portal.go.jp/api/v1/prefectures';
+  populationByPrefecturePath = 'https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear';
   constructor(private http: HttpClient) { }
 
-  async prefectureApi() {
-    const headers = { 'X-API-KEY':'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' }
-     return this.http.get<any>(this.prefecturePath, { headers })
+  async prefectureApi(): Promise<any> {
+    const headers = { 'X-API-KEY': 'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' };
+    return this.http.get<any>(this.prefecturePath, { headers })
     .pipe(
       map((res) => {
-        for (var i = 0; i < res.result.length; i++){
-          res.result[i].name = res.result[i].prefName;
+        for (const i of res.result){
+          i.name = i.prefName;
         }
         return res;
       }),
       catchError((err) => {
         return err;
       })
-    ).toPromise()
+    ).toPromise();
   }
 
-  populationByPrefectureApi( prefCode:any ){
-    const headers = { 'X-API-KEY':'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' }
-     return this.http.get<any>(this.populationByPrefecturePath+'?prefCode='+prefCode+'&cityCode=-', { headers })
+  populationByPrefectureApi(prefCode: any): Promise<any>{
+    const headers = { 'X-API-KEY': 'g2bRHUL3xlMetlbfpZGr0bA0s2MvDWomHz3zSjlA' };
+    return this.http.get<any>(this.populationByPrefecturePath + '?prefCode=' + prefCode + '&cityCode=-', { headers })
     .pipe(
       map((res) => {
-        var out = res.result.data.find( (record:any) => record.label == "総人口")||{data:null}
-        var result={
-          year:[],
-          data:[]
+        const out = res.result.data.find( (record: any) => record.label === '総人口') || {data: null};
+        const result = {
+          year: [],
+          data: []
         } as any;
-        if(out.data!=null){
-          for (var i = 0; i < out.data.length; i++) {
-            result.year.push(out.data[i].year)
-            result.data.push(out.data[i].value)
+        if (out.data != null){
+          for (const i of out.data) {
+            result.year.push(i.year);
+            result.data.push(i.value);
           }
         }
         return result;
@@ -48,6 +48,6 @@ export class MainService {
       catchError((err) => {
         return err;
       })
-    )
+    ).toPromise();
   }
 }
